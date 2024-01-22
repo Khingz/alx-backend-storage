@@ -1,0 +1,3 @@
+// List  mongodb
+
+show dbs;

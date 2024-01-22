@@ -1,0 +1,2 @@
+// COunt document
+db.school.count();
