@@ -20,10 +20,13 @@ class Cache:
         return (r_id)
 
 
-    def get(key: str, fn=str):
+    def get(
+            key: str,
+            fn: Callable = None,
+            ) -> Union[str, bytes, int, float]:
         """Retrieves from a database"""
         data = self._redis.get(key)
-        if data is not None:
+        if fn is not None:
             return fn(data)
         return data
 
@@ -33,7 +36,7 @@ class Cache:
         return self.get(key, fn=str)
 
 
-    def get_int(self, key) -> int:
+    def get_int(self, key: str) -> int:
         """Convert to int"""
         return self.get(key, fn=int)
 
