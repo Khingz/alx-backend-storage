@@ -12,13 +12,11 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
-
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """Stores a data in reddis"""
         r_id = str(uuid.uuid4())
         self._redis.set(r_id, data)
         return (r_id)
-
 
     def get(
             key: str,
@@ -30,13 +28,10 @@ class Cache:
             return fn(data)
         return data
 
-
     def get_str(self, key: str) -> str:
         """Convert to string"""
-        return self.get(key, fn=str)
-
+        return self.get(key, fn=lambda x: x.decode('utf-8'))
 
     def get_int(self, key: str) -> int:
         """Convert to int"""
-        return self.get(key, fn=int)
-
+        return self.get(key, fn=lambda x: int(x))
