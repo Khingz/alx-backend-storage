@@ -19,6 +19,7 @@ class Cache:
         return (r_id)
 
     def get(
+            self,
             key: str,
             fn: Callable = None,
             ) -> Union[str, bytes, int, float]:
