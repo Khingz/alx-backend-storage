@@ -18,3 +18,22 @@ class Cache:
         r_id = str(uuid.uuid4())
         self._redis.set(r_id, data)
         return (r_id)
+
+
+    def get(key: str, fn=str):
+        """Retrieves from a database"""
+        data = self._redis.get(key)
+        if data is not None:
+            return fn(data)
+        return None
+
+
+    def get_str(self, key):
+        """Convert to string"""
+        return self.get(key, fn=str)
+
+
+    def get_int(self, key):
+        """Convert to int"""
+        return self.get(key, fn=int)
+
