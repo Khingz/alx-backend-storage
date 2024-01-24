@@ -40,14 +40,12 @@ def replay(method: Callable) -> Callable:
     def wrapper(self, *args, **kwds):
         """Wrapper function"""
         key = method.__qualname__
-        result = method(self, *args, **kwds)
         input_key = "{}:input".format(key)
         input_his = redis_client.lrange(input_key, 0, -1)
         output_key = "{}:output".format(key)
         output_his = redis_client.lrange(output_key, 0, -1)
         for i, o in zip(input_his, output_his):
             print("{}(*{}) -> {}".format(key, i.decode("utf-8"), o))
-        return (result)
     return wrapper
 
 
