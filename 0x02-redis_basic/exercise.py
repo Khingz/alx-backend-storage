@@ -2,7 +2,7 @@
 """Comment"""
 import uuid
 import redis
-from typing import Union
+from typing import Union, Callable
 
 
 class Cache:
