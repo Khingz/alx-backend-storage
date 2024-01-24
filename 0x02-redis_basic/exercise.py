@@ -46,7 +46,7 @@ def replay(method: Callable) -> Callable:
         output_key = "{}:output".format(key)
         output_his = redis_client.lrange(output_key, 0, -1)
         for i, o in zip(input_his, output_his):
-            print("{}({}) -> {}".format(key, i, o))
+            print("{}(*{}) -> {}".format(key, i.decode("utf-8"), o))
         return (result)
     return wrapper
 
