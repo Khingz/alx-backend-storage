@@ -25,15 +25,15 @@ class Cache:
         data = self._redis.get(key)
         if data is not None:
             return fn(data)
-        return None
+        return data
 
 
-    def get_str(self, key):
+    def get_str(self, key: str) -> str:
         """Convert to string"""
         return self.get(key, fn=str)
 
 
-    def get_int(self, key):
+    def get_int(self, key) -> int:
         """Convert to int"""
         return self.get(key, fn=int)
 
