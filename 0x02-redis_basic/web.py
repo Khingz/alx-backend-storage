@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Commnet"""
+'''A module with tools for request caching and tracking.
+'''
 import redis
 import requests
 from functools import wraps
@@ -7,13 +8,17 @@ from typing import Callable
 
 
 redis_store = redis.Redis()
+'''The module-level Redis instance.
+'''
 
 
-def cache(method: Callable) -> Callable:
-    """Cache wrapper"""
+def data_cacher(method: Callable) -> Callable:
+    '''Caches the output of fetched data.
+    '''
     @wraps(method)
-    def wrapper(url) -> str:
-        """wrapper method"""
+    def invoker(url) -> str:
+        '''The wrapper function for caching the output.
+        '''
         redis_store.incr(f'count:{url}')
         result = redis_store.get(f'result:{url}')
         if result:
@@ -22,10 +27,12 @@ def cache(method: Callable) -> Callable:
         redis_store.set(f'count:{url}', 0)
         redis_store.setex(f'result:{url}', 10, result)
         return result
-    return wrapper
+    return invoker
 
 
+@data_cacher
 def get_page(url: str) -> str:
-    """obtain the HTML content of a particular URL"""
-    content = requests.get(url).text
-    return (content)
+    '''Returns the content of a URL after caching the request's response,
+    and tracking the request.
+    '''
+    return requests.get(url).text
