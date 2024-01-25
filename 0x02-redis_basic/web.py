@@ -19,7 +19,7 @@ def cache(method: Callable) -> Callable:
             return result.decode('utf-8')
         result = method(url)
         redis_store.set("count:{}".format(url))
-        redis_store.setex("count:{}".format(url), 10, result)
+        redis_store.setex("result:{}".format(url), 10, result)
         return result
     return wrapper
 
