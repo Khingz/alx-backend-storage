@@ -21,7 +21,7 @@ def cache(method: Callable) -> Callable:
         redis_store.set("count:{}".format(url))
         redis_store.setex("count:{}".format(url), 10, result)
         return result
-    return invoker
+    return wrapper
 
 
 def get_page(url: str) -> str:
